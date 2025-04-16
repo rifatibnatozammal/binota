@@ -2,8 +2,9 @@ import streamlit as st
 import pandas as pd
 import pickle
 
-# Load the trained model
-with open('trained_model.pkl', 'rb') as file:
+# Load the trained model from the uploaded file
+model_file = '/mnt/data/new_model.pkl'
+with open(model_file, 'rb') as file:
     model = pickle.load(file)
 
 # Define the feature names and their corresponding abbreviations
@@ -18,6 +19,7 @@ feature_names = {
     'NI': 'Have you experienced any negative impacts from AI on your learning or teaching process?',
     'EF': 'How effective are AI tools with your personal learning needs?',
     'IN': 'Have AI tools increased your interest in learning new topics?',
+    'IR': 'Overall, how would you rate the impact of AI on your learning experience?',
 }
 
 # Create the Streamlit app

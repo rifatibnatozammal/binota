@@ -3,7 +3,7 @@ import pandas as pd
 import pickle
 
 # Load the trained model from the uploaded file
-model_file = 'new_model.pkl'
+model_file = '/mnt/data/new_model.pkl'
 with open(model_file, 'rb') as file:
     model = pickle.load(file)
 
@@ -12,15 +12,18 @@ feature_names = {
     'CM': 'How comfortable are you using AI tools for learning or teaching?',
     'TS': 'Do AI tools save time in completing assignments or preparing lessons?',
     'EN': 'Have AI tools increased your engagement with the learning material?',
-    'VC': 'Are you challenged to verify the accuracy of AI-generated data?',
-    'IC': 'Do you think AI tools reduce critical thinking or creativity?',
-    'OR': 'Do you feel over-reliant on AI tools for educational tasks?',
-    'PC': 'Privacy concerns:',
-    'NI': 'Have you experienced any negative impacts from AI on your learning or teaching process?',
     'EF': 'How effective are AI tools with your personal learning needs?',
     'IN': 'Have AI tools increased your interest in learning new topics?',
-    'IR': 'Overall, how would you rate the impact of AI on your learning experience?',
+    'NI': 'Have you experienced any negative impacts from AI on your learning or teaching process?',
+    'PC': 'Privacy concerns:',
+    'OR': 'Do you feel over-reliant on AI tools for educational tasks?',
+    'IC': 'Do you think AI tools reduce critical thinking or creativity?',
+    'VC': 'Are you challenged to verify the accuracy of AI-generated data?',
+    'IR': 'Do you think AI tools improve your research or information retrieval skills?',
 }
+
+# Correct feature order as per the model's requirement
+correct_feature_order = ['CM', 'TS', 'EN', 'EF', 'IN', 'NI', 'PC', 'OR', 'IC', 'VC', 'IR']
 
 # Create the Streamlit app
 st.title('AI in Education Prediction App')
@@ -48,6 +51,9 @@ for feature_abbr, feature_question in feature_names.items():
 
 # Create a DataFrame for input data
 input_df = pd.DataFrame([input_data], columns=feature_names.keys())
+
+# Ensure the columns are in the same order as expected by the model
+input_df = input_df[correct_feature_order]
 
 # Display a loading spinner during prediction
 if st.button('Predict'):

@@ -78,9 +78,12 @@ input_df = pd.DataFrame([input_data], columns=feature_names.keys())
 # Ensure the columns are in the same order as expected by the model
 input_df = input_df[correct_feature_order]
 
-# Function to handle prediction
+# Define the function to handle the prediction and display results
 def predict():
     prediction = model.predict(input_df)[0]
+    st.session_state.prediction = prediction  # Store the prediction in session_state
+    
+    # Show prediction results
     st.write("### Your responses:")
     for feature_abbr, feature_question in feature_names.items():
         st.write(f"{feature_question}: {input_df[feature_abbr][0]}")
@@ -94,22 +97,20 @@ def predict():
         st.markdown('<h3 style="color:green;">Prediction: <b>Positive</b></h3>', unsafe_allow_html=True)
         st.write("### Recommendation:")
         st.write("You seem to benefit greatly from AI tools. Keep exploring new AI tools to enhance your learning.")
-    
-    # Trigger a refresh by updating session_state
-    st.session_state.prediction = True  # Store the prediction result in session_state
 
-# Trigger the prediction logic only when the button is clicked
+# Check if the prediction has already been made in session_state
 if 'prediction' not in st.session_state:
-    st.session_state.prediction = False
+    st.session_state.prediction = None
 
+# Trigger the prediction when the button is clicked
 if st.button('Predict'):
     with st.spinner('Making your prediction...'):
         if len(input_data) == len(feature_names):  # Ensure all inputs are filled
             predict()
 
-# If a prediction exists, auto-refresh the UI and display the result
-if st.session_state.prediction:
-    st.experimental_rerun()
+# Display the prediction if it's available
+if st.session_state.prediction is not None:
+    st.experimental_rerun()  # Automatically refresh to show the result
 
 # Add custom CSS for styling
 st.markdown("""

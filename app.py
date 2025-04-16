@@ -61,12 +61,12 @@ for feature_abbr, feature_question in feature_names.items():
     # Get the possible values for the feature
     feature_range = feature_values[feature_abbr]
     
-    # Create a slider with appropriate range
+    # Create a slider with appropriate range and default value set to 0
     value = st.slider(
         feature_question,
         min(feature_range),
         max(feature_range),
-        2,  # Default value
+        0,  # Default value set to 0
         help="Choose a value within the provided range"
     )
     

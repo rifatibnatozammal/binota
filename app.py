@@ -22,6 +22,21 @@ feature_names = {
     'IR': 'Do you think AI tools improve your research or information retrieval skills?',
 }
 
+# Define valid input values for each feature
+feature_values = {
+    'CM': [1, 0, 2, 4, 3],
+    'TS': [4, 3, 1, 2, 0],
+    'EN': [1, 0],
+    'EF': [0, 2, 1],
+    'IN': [3, 2, 0, 1],
+    'NI': [1, 0],
+    'PC': [0, 2, 1, 3],
+    'OR': [1, 0],
+    'IC': [2, 0, 1],
+    'VC': [1, 2, 3, 0],
+    'IR': [2, 1, 3, 0]
+}
+
 # Correct feature order as per the model's requirement
 correct_feature_order = ['CM', 'TS', 'EN', 'EF', 'IN', 'NI', 'PC', 'OR', 'IC', 'VC', 'IR']
 
@@ -42,10 +57,11 @@ input_data = []
 # Get user input for features
 for feature_abbr, feature_question in feature_names.items():
     st.write(f"### {feature_question}")
-    value = st.slider(
+    value = st.select_slider(
         feature_question,
-        0, 4, 2,
-        help="Rate from 0 (Strongly Disagree) to 4 (Strongly Agree)"
+        options=feature_values[feature_abbr],
+        value=feature_values[feature_abbr][2],  # Default value (for simplicity, choose the middle value)
+        help="Select a value from the available options"
     )
     input_data.append(value)
 

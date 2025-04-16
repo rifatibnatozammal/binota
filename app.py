@@ -22,7 +22,10 @@ feature_names = {
     'IR': 'Do you think AI tools improve your research or information retrieval skills?',
 }
 
-# Define valid input values for each feature
+# Correct feature order as per the model's requirement
+correct_feature_order = ['CM', 'TS', 'EN', 'EF', 'IN', 'NI', 'PC', 'OR', 'IC', 'VC', 'IR']
+
+# Define the possible input values for each feature
 feature_values = {
     'CM': [0, 1, 2, 3, 4],
     'TS': [0, 1, 2, 3, 4],
@@ -36,9 +39,6 @@ feature_values = {
     'VC': [0, 1, 2, 3],
     'IR': [0, 1, 2, 3]
 }
-
-# Correct feature order as per the model's requirement
-correct_feature_order = ['CM', 'TS', 'EN', 'EF', 'IN', 'NI', 'PC', 'OR', 'IC', 'VC', 'IR']
 
 # Create the Streamlit app
 st.title('AI in Education Prediction App')
@@ -54,15 +54,22 @@ st.markdown("""
 # Create a dictionary to hold user inputs
 input_data = []
 
-# Get user input for features
+# Get user input for features with custom ranges
 for feature_abbr, feature_question in feature_names.items():
     st.write(f"### {feature_question}")
-    value = st.select_slider(
+    
+    # Get the possible values for the feature
+    feature_range = feature_values[feature_abbr]
+    
+    # Create a slider with appropriate range
+    value = st.slider(
         feature_question,
-        options=feature_values[feature_abbr],
-        value=feature_values[feature_abbr][2],  # Default value (for simplicity, choose the middle value)
-        help="Select a value from the available options"
+        min(feature_range),
+        max(feature_range),
+        2,  # Default value
+        help="Choose a value within the provided range"
     )
+    
     input_data.append(value)
 
 # Create a DataFrame for input data

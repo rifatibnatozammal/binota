@@ -24,17 +24,17 @@ feature_names = {
 
 # Define valid input values for each feature
 feature_values = {
-    'CM': [1, 0, 2, 4, 3],
-    'TS': [4, 3, 1, 2, 0],
-    'EN': [1, 0],
-    'EF': [0, 2, 1],
-    'IN': [3, 2, 0, 1],
-    'NI': [1, 0],
-    'PC': [0, 2, 1, 3],
-    'OR': [1, 0],
-    'IC': [2, 0, 1],
-    'VC': [1, 2, 3, 0],
-    'IR': [2, 1, 3, 0]
+    'CM': [0, 1, 2, 3, 4],
+    'TS': [0, 1, 2, 3, 4],
+    'EN': [0, 1],
+    'EF': [0, 1, 2],
+    'IN': [0, 1, 2, 3],
+    'NI': [0, 1],
+    'PC': [0, 1, 2, 3],
+    'OR': [0, 1],
+    'IC': [0, 1, 2],
+    'VC': [0, 1, 2, 3],
+    'IR': [0, 1, 2, 3]
 }
 
 # Correct feature order as per the model's requirement

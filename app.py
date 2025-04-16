@@ -78,8 +78,8 @@ input_df = pd.DataFrame([input_data], columns=feature_names.keys())
 # Ensure the columns are in the same order as expected by the model
 input_df = input_df[correct_feature_order]
 
-# Function to handle rerun
-def predict_and_rerun():
+# Function to handle prediction
+def predict():
     prediction = model.predict(input_df)[0]
     st.write("### Your responses:")
     for feature_abbr, feature_question in feature_names.items():
@@ -95,16 +95,21 @@ def predict_and_rerun():
         st.write("### Recommendation:")
         st.write("You seem to benefit greatly from AI tools. Keep exploring new AI tools to enhance your learning.")
     
-    # Trigger a rerun after prediction
-    st.experimental_rerun()
+    # Trigger a refresh by updating session_state
+    st.session_state.prediction = True  # Store the prediction result in session_state
 
-# Display a loading spinner and prediction button
+# Trigger the prediction logic only when the button is clicked
+if 'prediction' not in st.session_state:
+    st.session_state.prediction = False
+
 if st.button('Predict'):
     with st.spinner('Making your prediction...'):
         if len(input_data) == len(feature_names):  # Ensure all inputs are filled
-            predict_and_rerun()
-        else:
-            st.warning("Please fill out all questions before predicting.")
+            predict()
+
+# If a prediction exists, auto-refresh the UI and display the result
+if st.session_state.prediction:
+    st.experimental_rerun()
 
 # Add custom CSS for styling
 st.markdown("""

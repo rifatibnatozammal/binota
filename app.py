@@ -78,24 +78,31 @@ input_df = pd.DataFrame([input_data], columns=feature_names.keys())
 # Ensure the columns are in the same order as expected by the model
 input_df = input_df[correct_feature_order]
 
-# Display a loading spinner during prediction
+# Function to handle rerun
+def predict_and_rerun():
+    prediction = model.predict(input_df)[0]
+    st.write("### Your responses:")
+    for feature_abbr, feature_question in feature_names.items():
+        st.write(f"{feature_question}: {input_df[feature_abbr][0]}")
+    
+    # Display prediction result with color coding
+    if prediction == 0:
+        st.markdown('<h3 style="color:red;">Prediction: <b>Negative</b></h3>', unsafe_allow_html=True)
+        st.write("### Recommendation:")
+        st.write("Consider exploring more AI tools or balancing them with other traditional learning methods.")
+    else:
+        st.markdown('<h3 style="color:green;">Prediction: <b>Positive</b></h3>', unsafe_allow_html=True)
+        st.write("### Recommendation:")
+        st.write("You seem to benefit greatly from AI tools. Keep exploring new AI tools to enhance your learning.")
+    
+    # Trigger a rerun after prediction
+    st.experimental_rerun()
+
+# Display a loading spinner and prediction button
 if st.button('Predict'):
     with st.spinner('Making your prediction...'):
         if len(input_data) == len(feature_names):  # Ensure all inputs are filled
-            prediction = model.predict(input_df)[0]
-            st.write("### Your responses:")
-            for feature_abbr, feature_question in feature_names.items():
-                st.write(f"{feature_question}: {input_df[feature_abbr][0]}")
-            
-            # Display prediction result with color coding
-            if prediction == 0:
-                st.markdown('<h3 style="color:red;">Prediction: <b>Negative</b></h3>', unsafe_allow_html=True)
-                st.write("### Recommendation:")
-                st.write("Consider exploring more AI tools or balancing them with other traditional learning methods.")
-            else:
-                st.markdown('<h3 style="color:green;">Prediction: <b>Positive</b></h3>', unsafe_allow_html=True)
-                st.write("### Recommendation:")
-                st.write("You seem to benefit greatly from AI tools. Keep exploring new AI tools to enhance your learning.")
+            predict_and_rerun()
         else:
             st.warning("Please fill out all questions before predicting.")
 

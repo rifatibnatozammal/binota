@@ -57,7 +57,7 @@ if st.button('Predict'):
                 st.write(f"{feature_question}: {input_df[feature_abbr][0]}")
             
             # Display prediction result with color coding
-            if prediction == 0:
+            if prediction == 1:
                 st.markdown('<h3 style="color:red;">Prediction: <b>Negative</b></h3>', unsafe_allow_html=True)
                 st.write("### Recommendation:")
                 st.write("Consider exploring more AI tools or balancing them with other traditional learning methods.")

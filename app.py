@@ -101,7 +101,7 @@ if st.button('Predict'):
 
 # Refresh button to reset the form
 if st.button('Refresh'):
-    st.experimental_rerun()
+    st.rerun()  # Using st.rerun() to refresh the app and reset form
 
 # Add custom CSS for styling
 st.markdown("""

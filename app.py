@@ -3,7 +3,7 @@ import pandas as pd
 import pickle
 
 # Load the trained model from the uploaded file
-model_file = '/mnt/data/new_model.pkl'
+model_file = 'new_model.pkl'
 with open(model_file, 'rb') as file:
     model = pickle.load(file)
 
